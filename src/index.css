@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-cinzel: 'Cinzel', serif;
+    --font-cinzel-dec: 'Cinzel Decorative', serif;
+    --font-parchment: 'Cormorant Garamond', Georgia, serif;
+    --font-cursive: 'Marck Script', cursive;
+    --font-fondamento: 'Fondamento', cursive, serif;
+  }
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+.font-cinzel-dec {
+  font-family: var(--font-cinzel-dec);
+}
+
+.font-parchment {
+  font-family: var(--font-parchment);
+}
+
+.font-cursive {
+  font-family: var(--font-cursive);
+}
+
+.font-fondamento {
+  font-family: var(--font-fondamento);
+}
+
+/* Aged Parchment styling */
+.parchment-texture {
+  background-color: #f5eedb;
+  background-image: 
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 245, 0.9) 0%, rgba(235, 218, 185, 0.85) 60%, rgba(200, 175, 135, 0.95) 100%),
+    radial-gradient(circle at 15% 20%, rgba(139, 90, 43, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(100, 60, 20, 0.1) 0%, transparent 45%),
+    repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(160, 130, 95, 0.12) 31px, rgba(160, 130, 95, 0.12) 32px);
+  box-shadow: 
+    inset 0 0 45px rgba(80, 50, 20, 0.35),
+    inset 0 0 100px rgba(45, 25, 10, 0.25),
+    0 15px 35px rgba(0, 0, 0, 0.65),
+    0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.parchment-subtle {
+  background-color: #17131b;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(120, 20, 45, 0.15), transparent 70%),
+    radial-gradient(circle at 100% 100%, rgba(10, 60, 40, 0.12), transparent 60%);
+}
+
+/* Magical Glows */
+.gold-glow {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 20px rgba(218, 165, 32, 0.3);
+}
+
+.emerald-glow {
+  text-shadow: 0 0 10px rgba(46, 204, 113, 0.6), 0 0 20px rgba(39, 174, 96, 0.4);
+}
+
+.maroon-glow {
+  box-shadow: 0 0 25px rgba(128, 0, 32, 0.35);
+}
+
+/* Gilded border styling */
+.gilded-border {
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 
+    0 0 0 1px rgba(15, 10, 5, 0.8),
+    0 0 0 2px rgba(212, 175, 55, 0.2),
+    inset 0 0 15px rgba(212, 175, 55, 0.08);
+}
+
+.gilded-border-bright {
+  border: 1px solid rgba(243, 206, 82, 0.6);
+  box-shadow: 
+    0 0 12px rgba(212, 175, 55, 0.35),
+    inset 0 0 12px rgba(212, 175, 55, 0.15);
+}
+
+/* Custom enchanted scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0a12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3e2840;
+  border-radius: 4px;
+  border: 1px solid #755030;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a385f;
+  border-color: #d4af37;
+}
+
+/* Ink absorb animation */
+@keyframes inkAbsorb {
+  0% {
+    filter: blur(0px);
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    filter: blur(1.5px);
+    opacity: 0.7;
+    color: #4a2810;
+  }
+  100% {
+    filter: blur(3px);
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+.animate-ink-absorb {
+  animation: inkAbsorb 1.8s forwards ease-in-out;
+}
+
+/* Ink reveal animation */
+@keyframes inkReveal {
+  0% {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+}
+
+.animate-ink-reveal {
+  animation: inkReveal 1.2s forwards ease-out;
+}
+
+/* Candle flicker ambient */
+@keyframes candleFlicker {
+  0%, 100% {
+    opacity: 0.92;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 0.85;
+    transform: scale(0.99) translateX(1px);
+  }
+  50% {
+    opacity: 0.96;
+    transform: scale(1.01) translateY(-1px);
+  }
+  75% {
+    opacity: 0.89;
+    transform: scale(0.98) translateX(-1px);
+  }
+}
+
+.candle-flicker {
+  animation: candleFlicker 4s infinite ease-in-out;
+}
+
+/* Subtle sparkle float */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-40px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.animate-float-sparkle {
+  animation: floatUp 2.5s infinite linear;
+}
+
