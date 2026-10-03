@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "JournalEntry": {
+      "title": "JournalEntry",
+      "description": "A secret journal entry inscribed by a wizard and answered by the sentient diary.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The unique ID of the wizard or seeker author."
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Subject or title of the secret."
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 5000,
+          "description": "The private confession or inquiry written on the parchment."
+        },
+        "diaryReply": {
+          "type": "string",
+          "maxLength": 5000,
+          "description": "The in-character response from the sentient diary."
+        },
+        "house": {
+          "type": "string",
+          "enum": ["Slytherin", "Gryffindor", "Ravenclaw", "Hufflepuff", "Hogwarts"],
+          "description": "Hogwarts House affiliation."
+        },
+        "inkColor": {
+          "type": "string",
+          "enum": ["obsidian", "emerald", "maroon", "gold"],
+          "description": "Color of the enchanted ink."
+        },
+        "mood": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Resonance or sentiment tag."
+        },
+        "dateFormatted": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Human readable parchment date."
+        },
+        "moonPhase": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Lunar phase symbol and name."
+        },
+        "astronomyHour": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Hogwarts astronomical hour."
+        },
+        "isFavorite": {
+          "type": "boolean",
+          "description": "Whether the entry has a golden bookmark ribbon."
+        },
+        "timestamp": {
+          "type": "number",
+          "description": "Unix timestamp in milliseconds."
+        }
+      },
+      "required": ["userId", "title", "content", "diaryReply", "house", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/entries/{entryId}": {
+      "schema": "JournalEntry",
+      "description": "Collection of private journal entries belonging to a specific wizard or seeker."
+    }
+  }
+}

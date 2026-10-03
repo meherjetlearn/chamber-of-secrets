@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default-deny catch-all (Pillar 1 / Global Safety Net)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidJournalEntry(data, userId) {
+      return data.keys().hasAll(['userId', 'title', 'content', 'diaryReply', 'house', 'timestamp'])
+        && data.keys().hasOnly(['userId', 'title', 'content', 'diaryReply', 'house', 'inkColor', 'mood', 'dateFormatted', 'moonPhase', 'astronomyHour', 'isFavorite', 'isConcealed', 'timestamp'])
+        && data.userId == userId
+        && data.title is string && data.title.size() <= 200
+        && data.content is string && data.content.size() <= 5000
+        && data.diaryReply is string && data.diaryReply.size() <= 5000
+        && data.house is string && data.house in ['Slytherin', 'Gryffindor', 'Ravenclaw', 'Hufflepuff', 'Hogwarts']
+        && (!('inkColor' in data) || (data.inkColor is string && data.inkColor in ['obsidian', 'emerald', 'maroon', 'gold']))
+        && (!('mood' in data) || (data.mood is string && data.mood.size() <= 100))
+        && (!('dateFormatted' in data) || (data.dateFormatted is string && data.dateFormatted.size() <= 100))
+        && (!('moonPhase' in data) || (data.moonPhase is string && data.moonPhase.size() <= 100))
+        && (!('astronomyHour' in data) || (data.astronomyHour is string && data.astronomyHour.size() <= 100))
+        && (!('isFavorite' in data) || data.isFavorite is bool)
+        && (!('isConcealed' in data) || data.isConcealed is bool)
+        && data.timestamp is number;
+    }
+
+    // Connection test document
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // User journal entries
+    match /users/{userId}/entries/{entryId} {
+      allow get, list: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && isValidId(entryId)
+        && isValidJournalEntry(request.resource.data, userId);
+      allow update: if isOwner(userId)
+        && isValidJournalEntry(request.resource.data, userId)
+        && request.resource.data.userId == resource.data.userId
+        && request.resource.data.timestamp == resource.data.timestamp;
+      allow delete: if isOwner(userId);
+    }
+  }
+}
